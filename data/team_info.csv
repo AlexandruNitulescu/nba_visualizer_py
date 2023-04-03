@@ -1,0 +1,31 @@
+;team_id;team_name;arena_name;latitude;longitude
+0;ATL;Atlanta Hawks;State Farm Arena;33.7573;-84.3963
+1;BOS;Boston Celtics;TD Garden;42.3662;-71.0621
+2;BKN;Brooklyn Nets;Barclays Center;40.6826;-73.9754
+3;CHA;Charlotte Hornets;Spectrum Center;35.2251;-80.8392
+4;CHI;Chicago Bulls;United Center;41.8807;-87.6742
+5;CLE;Cleveland Cavaliers;Rocket Mortgage FieldHouse;41.4965;-81.688
+6;DAL;Dallas Mavericks;American Airlines Center;32.7906;-96.8101
+7;DEN;Denver Nuggets;Ball Arena;39.7487;-105.0077
+8;DET;Detroit Pistons;Little Caesars Arena;42.3426;-83.0554
+9;GSW;Golden State Warriors;Chase Center;37.768;-122.3862
+10;HOU;Houston Rockets;Toyota Center;29.7508;-95.3621
+11;IND;Indiana Pacers;Bankers Life Fieldhouse;39.7639;-86.1555
+12;LAC;Los Angeles Clippers;Staples Center;34.043;-118.2673
+13;LAL;Los Angeles Lakers;Staples Center;34.043;-118.2673
+14;MEM;Memphis Grizzlies;FedExForum;35.1381;-90.0507
+15;MIA;Miami Heat;AmericanAirlines Arena;25.7814;-80.187
+16;MIL;Milwaukee Bucks;Fiserv Forum;43.0451;-87.9173
+17;MIN;Minnesota Timberwolves;Target Center;44.9795;-93.2768
+18;NOP;New Orleans Pelicans;Smoothie King Center;29.9489;-90.0812
+19;NYK;New York Knicks;Madison Square Garden;40.7505;-73.9934
+20;OKC;Oklahoma City Thunder;Paycom Center;35.4634;-97.5151
+21;ORL;Orlando Magic;Amway Center;28.5392;-81.3839
+22;PHI;Philadelphia 76ers;Wells Fargo Center;39.9012;-75.1719
+23;PHO;Phoenix Suns;Footprint Center;33.4457;-112.0712
+24;POR;Portland Trail Blazers;Moda Center;45.5316;-122.666
+25;SAC;Sacramento Kings;Golden 1 Center;38.5802;-121.4991
+26;SAS;San Antonio Spurs;AT&T Center;29.4271;-98.4375
+27;TOR;Toronto Raptors;Scotiabank Arena;43.6435;-79.3791
+28;UTA;Utah Jazz;Vivint Arena;40.7683;-111.9011
+29;WAS;Washington Wizards;Capital One Arena;38.898;-77.0209

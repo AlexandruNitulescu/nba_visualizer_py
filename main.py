@@ -65,7 +65,9 @@ div[data-testid="metric-container"] > label[data-testid="stMetricLabel"] > div {
    overflow-wrap: break-word;
    white-space: break-spaces;
    color: black;
+   font-size: large;
 }
+
 </style>
 """
 , unsafe_allow_html=True)
@@ -78,9 +80,9 @@ avg_tovpg = t_tov['tovpg'].mean()
 avg_blkpg = t_blk['blkpg'].mean()
 avg_pfpg = t_pf['pfpg'].mean()
 
-#col2.subheader('Made by [Alexandru Nitulescu](https://www.linkedin.com/in/alexandru-nitulescu-035778153/)')
 st.header("Summary")
-st.markdown("NBA Visualizer is a dynamic web app that provides a comprehensive look at the performance of NBA teams during the 2022-23 season. With scraped data and processed in the backend, the app provides insightful visualizations and analysis of key statistics. The user-friendly interface of the app, allows users to interact with the data and explore different visualizations that give them a better understanding of the performance of their favorite teams. With intuitive controls, users can filter and sort the data to focus on specific teams or statistics that interest them the most. NBA Visualizer offers a variety of charts and graphs that allow users to see trends and patterns in the data. From stacked bar charts to scatterplots, users can choose the visualizations that best suit their needs and preferences.")
+st.markdown("##### NBA Visualizer is a dynamic web app that provides a comprehensive look at the performance of NBA teams during the 2022-23 season. With scraped data and processed in the backend, the app provides insightful visualizations and analysis of key statistics. The user-friendly interface of the app, allows users to interact with the data and explore different visualizations that give them a better understanding of the performance of their favorite teams. With intuitive controls, users can filter and sort the data to focus on specific teams or statistics that interest them the most. NBA Visualizer offers a variety of charts and graphs that allow users to see trends and patterns in the data. From stacked bar charts to scatterplots, users can choose the visualizations that best suit their needs and preferences.")
+st.markdown('##### Made by **[Alexandru Nitulescu](https://www.linkedin.com/in/alexandru-nitulescu-035778153/)**')
 st.markdown("""---""")
 
 
@@ -415,68 +417,98 @@ fig.update_layout(
 st.plotly_chart(fig, use_container_width=True)
 
 st.markdown("""---""")
+
+calc = hlp.Calculation(conn)
+viz = hlp.Visualisation(conn)
+
 st.header("Match Analyzer")
-col_1, col_2, col_3 = st.columns(3)
-
-with col_1:
-    show_me_hi_lo = st.selectbox ("", ["Maximum","Minimum"],key = '1') 
-with col_2:
-    show_me_hi_lo = st.selectbox ("", ["Points", "Assists", "Rebounds", "Steals", "Turnovers", "Blocks"], key = '2') 
-with col_3:
-    show_me_hi_lo = st.selectbox ("", ["by a Team", "by both Teams combined", "difference between Teams"], key = '3') 
-
-st.markdown("""---""")
-st.header("Ternary Scatter Plot of Teams Based on FGM, AST, and REB")
-
-query = """
-SELECT team_name, AVG(fgm) AS avg_fgm, AVG(ast) AS avg_ast, AVG(reb) AS avg_reb
-FROM match_stats
-JOIN team_info ON team_info.team_id = match_stats.team_id
-GROUP BY team_name
-"""
-df = pd.read_sql(query, conn)
-
-# Find the maximum value of the three columns
-max_value = df[['avg_fgm', 'avg_ast', 'avg_reb']].max().max()
-
-fig = go.Figure(go.Scatterternary(
-    a=df['avg_fgm'], b=df['avg_ast'], c=df['avg_reb'],
-    mode='markers',
-    marker=dict(
-        symbol='circle',
-        sizemode='diameter',
-        sizeref=0.85,
-        size=10,
-        color=df['avg_fgm']+df['avg_ast']*2+df['avg_reb']*3,
-        colorscale=[[0, "#9b19f5"], [0.5, "#ffa300"], [1, "#dc0ab4"]],
-        opacity=0.7,
-    ),
-    text=df['team_name'],
-    hoverinfo='text',
-))
-
-fig.update_layout(
-    title={
-        'text': "Ternary Scatter Plot of Teams Based on FGM, AST, and REB",
-        'font': {'size': 20},
-        'x': 0.5,
-        'y': 0.95,
-        'xanchor': 'center'
-    },
-    ternary=dict(
-        sum=max_value*1.1, 
-        aaxis=dict(title='FGM', showgrid=True), 
-        baxis=dict(title='AST', showgrid=True), 
-        caxis=dict(title='REB', showgrid=True)
-    ),
-    height=600,
-    width=800,
+teams = pd.read_sql(
+    '''
+    SELECT team_name, team_id
+    FROM team_info
+    ''', conn
 )
 
-st.plotly_chart(fig, use_container_width=True)
+teams_dict = teams.set_index('team_id')['team_name'].to_dict()
 
-st.markdown("""
-This ternary scatter plot shows the average FGM, AST, and REB statistics for each team in the database.
-Each marker represents a team, and its color indicates its average REB.
-Hover over a marker to see the team name and its statistics.
-""")
+
+column1, column2, column3= st.columns([1,1,2])
+
+with column1:
+    selected_5 = st.selectbox("Select Team", list(teams_dict.values()))
+with column2:
+    selected_6 = st.selectbox("Select Teams", list(teams_dict.values()))
+
+selected_team1_id = list(teams_dict.keys())[list(teams_dict.values()).index(selected_5)]
+selected_team2_id = list(teams_dict.keys())[list(teams_dict.values()).index(selected_6)]
+df, match_ids = calc.get_match_stats(selected_team1_id, selected_team2_id)
+with column3:
+    options = st.multiselect("MatchIDS", options=match_ids, default=match_ids)
+if selected_5 != selected_6:
+    st.dataframe(df, use_container_width=True)
+
+column4, column5,column6 = st.columns([1,1,2])
+away_col, a_bar, h_bar, home_col = st.columns([1,2,2,1])
+header = [x for x in df.columns]
+if len(options) == 1:
+    match_id_rows = df.loc[df['match_id'] == options[0]]
+    row1 = match_id_rows.iloc[0].tolist()
+    row2 = match_id_rows.iloc[1].tolist()
+    selected = True
+    if row1[1] in row1[0]:
+        home_stats = row1
+        away_stats = row2
+    else:
+        home_stats = row2
+        away_stats = row1
+elif len(options)>1:
+    st.warning('Multiple id(s) will not show you match analysis. Filter down to a singular match.', icon="⚠️")
+
+else:
+    st.warning('No match id(s) have been selected. Select a specific game in order to take part of match analysis.', icon="⚠️")
+
+st.header('Match Analyzer')
+st.divider()
+
+if len(options) == 1:
+    match_id_rows = df.loc[df['match_id'] == options[0]]
+    row1 = match_id_rows.iloc[0].tolist()
+    row2 = match_id_rows.iloc[1].tolist()
+
+    if row1[1] in row1[0]:
+        home_stats = row1
+        away_stats = row2
+    else:
+        home_stats = row2
+        away_stats = row1
+    game_date = pd.read_sql_query(f'''
+        SELECT game_date 
+        FROM game_dates
+        wHERE date_id ={row1[2]}''', conn).iloc[0].item()
+
+col41, col51, col61, col71 = st.columns([1,3,3,1])
+
+
+l_space, c1, c2, c3, c4, r_space  = st.columns((0.2, .8, 3, 3, .8, 0.2))
+with l_space:
+    st.empty()
+with c1:
+    st.markdown("<div>👟 Shots on Goal</div>", unsafe_allow_html=True)
+
+
+with c2:
+    st.markdown(f"<h2 style='text-align: right;'>{selected_5}</h2>", unsafe_allow_html=True)
+    st.markdown(f"<h2 style='text-align: right;'>{away_stats[-1]}</h2>", unsafe_allow_html=True)
+
+    st.markdown("<div style='text-align: right;'>👟 Shots on Goal</div>", unsafe_allow_html=True)
+
+with c3:
+    st.markdown(f"<h2 style='text-align: left;'>{selected_6}</h2>", unsafe_allow_html=True)
+    st.markdown(f"<h2 style='text-align: left;'>{home_stats[-1]}</h2>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align: left;'>👟 Shots on Goal</div>", unsafe_allow_html=True)
+
+with c4:
+    st.markdown("<div style='text-align: right;'>👟 Shots on Goal</div>", unsafe_allow_html=True)
+
+with r_space:
+    st.empty()

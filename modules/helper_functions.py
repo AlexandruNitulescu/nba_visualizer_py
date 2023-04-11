@@ -22,94 +22,79 @@ class Visualisation:
         self.conn = conn
         self.color_palette = COLOR_PALETTE
     
-    def create_match_statsss(self, var, away_team, home_team):
-        away_name = away_team[1]
-        home_name = home_team[1]
-        var = var[2:]
-        figs = []
-        for i in range(len(var)):
+    def create_bars(self, away_stats, home_stats):
+        away_stats = away_stats[2:]
+        home_stats = home_stats[2:]
+
+        for i in range(len(home_stats)):
+            fig = go.Figure()
+    
+    def create_bar(self, stats1, stats2, home: bool, title: str, title2: str):
+        if home:
             fig = go.Figure()
             fig.add_trace(go.Bar(
-                x=away_team[i],
-                y=away_name,
-                text='test',
-                textposition='inside',
-                name='',
-                orientation='h'))
+                x=[stats1],
+                y=[0],
+                name=f'{title}',
+                orientation='h',
+                marker=dict(color='#50e991')
 
+            ))
             fig.add_trace(go.Bar(
-                x=home_team[i],
-                y=home_name,
-                text='test',
-                textposition='inside',
-                name='',
-                orientation='h'
+                x=[stats2-stats1],
+                y=[0],
+                name=f'{title2}',
+                orientation='h',
+                marker=dict(color='#474440')
             ))
 
             fig.update_layout(
-                xaxis_title='',
-                yaxis_title='',
-                barmode='stack',
-                showlegend=True,
-                legend=dict(x=0.1, y=1.2),
-                width=800,
-                height=150,
-                margin=dict(l=0, r=0, t=80, b=0),
-                xaxis=dict(showticklabels=False),
+                barmode="stack",
+                yaxis=dict(visible=False, showticklabels=False),
+                xaxis=dict(
+                    range=[0, stats2],
+                    visible=False,
+                    showticklabels=False,
+                    showgrid=False,
+                ),
+                margin=dict(l=0, r=0, t=0, b=0),
+                height=50,
             )
-            figs.append(fig)
-            return figs
-        
-        
-    def create_match_stats(my_df: pd.DataFrame, away_team, home_team):
-        header = [x for x in my_df.iloc[:, 2:]]
-        away_name = away_team[1]
-        home_name = home_team[1]
-        away_team = away_team[2:]
-        home_team = home_team[2:]
-
-        #my_df = my_df.iloc[:, 2:]
-        figs = []
-        for col in range(len(away_team)):
+        else:
             fig = go.Figure()
             fig.add_trace(go.Bar(
-                y=list(away_name),
-                x=[away_team[col]],
-                showlegend=True,
-                text='test',
-                textposition='inside',
-                name=f'{away_name}',
-                orientation='h'
-            ))   
+                x=[stats1],
+                y=[0],
+                orientation='h',
+                name=f'{title}',
+                marker=dict(color='#0bb4ff')
+            ))
 
             fig.add_trace(go.Bar(
-                y=list(home_name),
-                x=[home_team[col]],
-                text='test',
-                textposition='inside',
-                name=f'{home_name}',
-                orientation='h'
+                x=[stats2 - stats1],
+                y=[0],
+                name=f'{title2}',
+                orientation='h',
+                marker=dict(color='#474440')
             ))
 
             fig.update_layout(
-                title={
-                    'text':f'{header[col]}',
-                    'font':{
-                            'family': 'sans-serif',
-                            'size': 14,
-                            },
-                },
-                xaxis_title='',
-                yaxis_title='',
-                barmode='stack',
-                showlegend=False,
-                width=800,
-                height=150,
-                margin=dict(l=0, r=0, t=80, b=0),
-                xaxis=dict(showticklabels=False),
-            )
-            figs.append(fig)
-        return figs
+        barmode="stack",
+        yaxis=dict(visible=False, showticklabels=False),
+        xaxis=dict(
+            range=[stats2, 0],
+            visible=False,
+            showticklabels=False,
+            showgrid=False,
+        ),
+        margin=dict(l=0, r=0, t=0, b=0),
+        height=50,
+    )
+        return fig
+
+
+
+    
 class Calculation:    
     def __init__(self, conn: sqlite3.Connection):
         self.conn = conn
@@ -228,25 +213,28 @@ class Calculation:
 
         return df_count, df_dates, df_min, df_points, df_fgm
     
-    # def get_match_statss(self, team1_id, team2_id):    
-    #     sql_query = f"""
-    #         SELECT mi.*
-    #         FROM match_stats mi
-    #         WHERE mi.team_id = ? OR mi.team_id = ?
-    #     """
-    #     param_1 = team1_id
-    #     param_2 = team2_id
-
-    #     df = pd.read_sql(sql_query, self.conn, params=[param_1, param_2])
-    #     df = df[df.groupby('match_id')['team_id'].transform('nunique') == 2]
-    #     return df, df['match_id'].unique().tolist()
-    
     def get_match_stats(self, team_id1: str, team_id2: str):
         sql_query = """
-            SELECT ms.match_id, ms.team_id, ms.fgm, ms.fga, ms.tpm, ms.tpa, ms.ftm, ms.fta, ms.oreb, ms.dreb, ms.reb, 
+            SELECT ms.match_id, ms.team_id, ti.team_name, ms.fgm, ms.fga, ms.tpm, ms.tpa, ms.ftm, ms.fta, ms.oreb, ms.dreb, 
+            ms.reb, ms.ast, ms.tov, ms.stl, ms.blk, pf, mi.pts
+            FROM match_stats ms
+            JOIN match_info mi ON ms.match_id = mi.match_id
+            JOIN team_info ti ON ms.team_id = ti.team_id
+            WHERE (ms.team_id = ? AND mi.team_id = ?) OR (ms.team_id = ? AND mi.team_id = ?)
+        """
+        params = [team_id1, team_id1, team_id2, team_id2]
+
+        df = pd.read_sql(sql_query, self.conn, params=params)
+        df = df[df.groupby('match_id')['team_id'].transform('nunique') == 2]
+        
+        return df, df['match_id'].unique().tolist()
+    def get_match_statss(self, team_id1: str, team_id2: str):
+        sql_query = """
+            SELECT ms.match_id, ms.team_id, ti.team_name, ms.fgm, ms.fga, ms.tpm, ms.tpa, ms.ftm, ms.fta, ms.oreb, ms.dreb, ms.reb, 
             ms.ast, ms.tov, ms.stl, ms.blk, pf, mi.pts
             FROM match_stats ms
             JOIN match_info mi ON ms.match_id = mi.match_id
+            JOIN team_info ti on ms.match_id = ti.team_id
             WHERE (ms.team_id = ? AND mi.team_id = ?) OR (ms.team_id = ? AND mi.team_id = ?)
         """
         params = [team_id1, team_id1, team_id2, team_id2]

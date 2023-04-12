@@ -1,4 +1,4 @@
-![page_1](https://github.com/AlexandruNitulescu/nba_visualizer_py/blob/main/img/logo.png?raw=true)
+![banner](https://github.com/AlexandruNitulescu/nba_visualizer_py/blob/main/img/logo.png?raw=true)
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://in-malmoe.streamlit.app/)
 # NBA Visualizer
 by Alexandru Nitulescu
@@ -10,7 +10,11 @@ The data preparation process involves various tasks, including manipulating colu
 Through this project, the goal is to provide an understanding of the data analysis process, including how to work with larger projects. The project showcases the principles of data analysis in action and serves as a portfolio piece for data analysts seeking to demonstrate their proficiency in these areas.
 
 ## Showcase
-
+![p1](https://github.com/AlexandruNitulescu/nba_visualizer_py/blob/main/img/preview1.png?raw=true)
+![p2](https://github.com/AlexandruNitulescu/nba_visualizer_py/blob/main/img/preview2.png?raw=true)
+![p3](https://github.com/AlexandruNitulescu/nba_visualizer_py/blob/main/img/preview3.png?raw=true)
+![p4](https://github.com/AlexandruNitulescu/nba_visualizer_py/blob/main/img/preview4.png?raw=true)
+![p5](https://github.com/AlexandruNitulescu/nba_visualizer_py/blob/main/img/preview5.png?raw=true)
 ## Introduction
 This project serves as a showcase of my skills in programming with Python, SQL and Power BI, specifically in the areas of database management, data analysis, and data visualization. The goal of this project is to create a reusable and effective project solution that can be applied to various data-driven tasks, such as creating dynamic dashboards and visualizations.
 

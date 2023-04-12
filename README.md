@@ -1,12 +1,15 @@
+![page_1](https://github.com/AlexandruNitulescu/nba_visualizer_py/blob/main/img/logo.png?raw=true)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://in-malmoe.streamlit.app/)
 # NBA Visualizer
 by Alexandru Nitulescu
-
 ## Abstract
 NBA Visualizer is an example of the skills and techniques applied by a data analyst for data-driven decision making. The project follows the general principles of data analysis, starting with asking relevant questions to guide the exploration of data, and then focusing on preparing and processing the data. The project uses scraped data from NBA teams and their results during the 2022-23 seasons to demonstrate these principles.
 
 The data preparation process involves various tasks, including manipulating columns, changing data types, ensuring data integrity, and optimizing tables. The project uses an Entity Relationship (ER) diagram to visualize the structure of the database and applies normalization techniques to minimize redundancy and improve efficiency.
 
 Through this project, the goal is to provide an understanding of the data analysis process, including how to work with larger projects. The project showcases the principles of data analysis in action and serves as a portfolio piece for data analysts seeking to demonstrate their proficiency in these areas.
+
+## Showcase
 
 ## Introduction
 This project serves as a showcase of my skills in programming with Python, SQL and Power BI, specifically in the areas of database management, data analysis, and data visualization. The goal of this project is to create a reusable and effective project solution that can be applied to various data-driven tasks, such as creating dynamic dashboards and visualizations.
@@ -33,17 +36,57 @@ The purpose of the SQL section is to showcase some sample SQL queries that can b
 Data visualizations play a crucial role in communicating insights and patterns discovered in the data. In this section, we utilize various Python visualization libraries such as Matplotlib, Seaborn, and Plotly to create informative and visually appealing charts, graphs, and other visualizations. These visualizations are designed to effectively communicate insights to stakeholders, such as management or clients, in a clear and concise manner. The selection of visualization types and techniques used will depend on the nature of the data and the intended audience. Our goal is to present the data in an intuitive way that highlights important patterns and relationships, making it easy for viewers to extract valuable insights.
 
 ## Dynamic Dashboard
-In addition to the data analysis and database management, this project showcases the benefits of using Power BI to create dynamic and interactive dashboards. Power BI is a powerful business analytics service provided by Microsoft, and it allows users to connect to a wide range of data sources, including databases, web services, and files.
-
+In addition to the data analysis and database management, this project showcases the benefits of using Power BI/web apps to create dynamic and interactive dashboards.
 Using Power BI, we can transform the analysis and visualizations created earlier in this project into a dynamic dashboard that is easy to interact with and provides real-time updates as new data becomes available. This dashboard can be shared with others to provide insights and support decision-making.
 
-Some of the benefits of using Power BI for dynamic dashboards include:
-* User-friendly interface: Power BI provides an intuitive interface that allows users to create and customize dashboards with ease.
-* Real-time data updates: Dashboards can be connected to live data sources, which ensures that the information displayed is always up-to-date.
-* Interactive visualizations: Power BI provides a wide range of visualizations, such as charts, graphs, and maps, which can be customized and interacted with by users.
-* Collaboration: Power BI allows for collaboration on dashboards, making it easy for teams to work together on data analysis and decision-making.
+Overall, using Power BI/web apps to create dynamic dashboards enhances the value of the data analysis and database management work done earlier in the project, and makes it easier to communicate insights to stakeholders.
 
-Overall, using Power BI to create dynamic dashboards enhances the value of the data analysis and database management work done earlier in the project, and makes it easier to communicate insights to stakeholders.
+## Repository structure
+```
+├── data
+│   ├── game_dates.csv        <- CSV file containing dates of NBA games
+│   ├── match_info.csv        <- CSV file containing general information about NBA games
+│   ├── match_stats.csv       <- CSV file containing detailed stats for each NBA game
+│   ├── raw_data.csv          <- CSV file containing raw data collected for NBA games
+│   ├── team_info.csv         <- CSV file containing information about NBA teams
+│
+│
+├── modules
+│   ├── helper_functions.py   <- Python module containing helper functions used in modeling the Streamlit web app
+│
+│
+├── database.ipynb            <- Step 3: Notebook showcasing the code interaction with a SQLite database
+│
+│
+├── main.py                   <- Python script containing the main script for Streamlit web app
+│
+│
+├── nba.db                    <- SQLite database containing the NBA data
+│
+│
+├── prepare.py                <- Step 1: Notebook showcasing the prepare phase
+│
+│
+├── process.py                <- Step 2: Notebook showcasing the data processing
+│
+│
+├── README.md                 <- This README file
+│
+│
+├── requirements.txt          <- Text file containing a list of all the dependencies with their respective version
+│
+│
+├── team_dashboard.pbix       <- Power BI report containing visualizations of the NBA data
+```
 
 ## Conclusion
 NBA visualizer serves as a testament to the effectiveness of a well-designed data analysis pipeline, from data collection to visualization, and the benefits of utilizing modern tools to create reusable and dynamic solutions. As a data analyst or scientist, this project showcases the ability to tackle complex data challenges and create effective data-driven solutions.
+
+## Contacts
+- **Web app** - 
+- **Documentation (in progress)** - 
+- **Bug reports:** - 
+
+- [LinkedIn](https://www.linkedin.com/in/alexandru-nitulescu-035778153/)
+- [GitHub](https://github.com/AlexandruNitulescu)
+- [Kaggle](https://www.kaggle.com/anitulescu)

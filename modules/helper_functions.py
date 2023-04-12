@@ -1,10 +1,7 @@
 import pandas as pd
 import numpy as np
 import plotly.express as px
-import streamlit as st
 import plotly.graph_objects as go
-import plotly.subplots as subplots
-from streamlit_extras.metric_cards import style_metric_cards
 import sqlite3
 
 COLOR_PALETTE = {
@@ -21,13 +18,6 @@ class Visualisation:
     def __init__(self, conn: sqlite3.Connection):
         self.conn = conn
         self.color_palette = COLOR_PALETTE
-    
-    def create_bars(self, away_stats, home_stats):
-        away_stats = away_stats[2:]
-        home_stats = home_stats[2:]
-
-        for i in range(len(home_stats)):
-            fig = go.Figure()
     
     def create_bar(self, stats1, stats2, home: bool, title: str, title2: str):
         if home:
@@ -235,6 +225,7 @@ class Calculation:
             FROM match_stats ms
             JOIN match_info mi ON ms.match_id = mi.match_id
             JOIN team_info ti on ms.match_id = ti.team_id
+
             WHERE (ms.team_id = ? AND mi.team_id = ?) OR (ms.team_id = ? AND mi.team_id = ?)
         """
         params = [team_id1, team_id1, team_id2, team_id2]

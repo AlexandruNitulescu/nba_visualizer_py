@@ -19,8 +19,18 @@ st.set_page_config(
 )
 
 def sidebar():
-    st.sidebar.header('Documentation')
-    st.sidebar.info("For more information, please see the documentation at the following link: [Documentation](https://example.com/documentation)")
+    st.sidebar.header('NBA Visualizer')
+    st.sidebar.info(
+
+    "This app is developed and maintained by Alexandru Nitulescu.\n\n"
+    "Feel free to reach out to me on:\n"
+    "- [LinkedIn](https://www.linkedin.com/in/alexandru-nitulescu-035778153/)\n"
+    "- [GitHub](https://github.com/AlexandruNitulescu)\n"
+    "- [Kaggle](https://www.kaggle.com/anitulescu)\n"
+    
+    "App Last updated: 12th April 2023.\n"
+    "Database Last updated: 1st April 2023.\n")
+
 
 sidebar()
 #st.title(':basketball: NBA Visualizer')
@@ -471,9 +481,6 @@ else:
 ################
 ################
 
-st.header('Match Analyzer')
-st.markdown("""---""")
-
 if len(options) == 1:
     match_id_rows = df.loc[df['match_id'] == options[0]]
     row1 = match_id_rows.iloc[0].tolist()
@@ -485,43 +492,109 @@ if len(options) == 1:
     else:
         home_stats = row2
         away_stats = row1
-    # game_date = pd.read_sql_query(f'''
-    #     SELECT game_date 
-    #     FROM game_dates
-    #     wHERE date_id ={row1[2]}''', conn).iloc[0].item()
-    # st.markdown(f"Home stats: {home_stats}")
-    # st.markdown(f"Away stats:{away_stats}")
+    a_fgp = round((away_stats[3]/away_stats[4])*100,1)
+    h_fgp = round((home_stats[3]/home_stats[4])*100,1)
+    a_ftp = round((away_stats[5]/away_stats[6])*100,1)
+    h_ftp = round((home_stats[5]/home_stats[6])*100,1)
+    a_tpp = round((away_stats[7]/away_stats[8])*100,1)
+    h_tpp = round((home_stats[7]/home_stats[8])*100,1)  
 
-    l_space, c1, c2, c3, c4, r_space  = st.columns((0.2, .8, 3, 3, .8, 0.2))
+    l_space, c1, c2, c3, c4, r_space  = st.columns((0.2, 1.2, 3, 3, 1.2, 0.2))
     with l_space:
-        st.empty()
-    with c1:
         pass
 
+    with c1:
+        st.markdown(f"<h1 style='text-align: center;'> </h1>", unsafe_allow_html=True)
+        st.markdown(f"<h1 style='text-align: center;'> </h1>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center;'> </h3>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'> </p>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center;'> </h3>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'> </p>", unsafe_allow_html=True)
+
+        st.markdown(f"<h3 style='text-align: center;'>{away_stats[3]}/{away_stats[4]} ({a_fgp}%)</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'> </p>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center;'>{away_stats[5]}/{away_stats[6]} ({a_ftp}%)</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'> </p>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center;'>{away_stats[7]}/{away_stats[8]} ({a_tpp}%)</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'> </p>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center;'>{away_stats[10]+away_stats[9]} REB</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'> </p>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center;'>{away_stats[12]} AST</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'> </p>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center;'>{away_stats[13]} TOV</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'> </p>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center;'>{away_stats[14]} STL</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'> </p>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center;'>{away_stats[15]} BLK</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'> </p>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center;'>{away_stats[16]} PF</h3>", unsafe_allow_html=True)
     with c2:
+        config = {'displayModeBar': False}
         st.markdown(f"<h2 style='text-align: right;'>{away_stats[2]}</h2>", unsafe_allow_html=True)
         st.markdown(f"<h2 style='text-align: center;'>{away_stats[-1]}</h2>", unsafe_allow_html=True)
         fig = viz.create_bar(away_stats[3], away_stats[4], home=False, title="FGM", title2="Miss")
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True,config=config)
         fig = viz.create_bar(away_stats[5], away_stats[6], home=False, title="TPM", title2="Miss")
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True,config=config)
         fig = viz.create_bar(away_stats[7], away_stats[8], home=False, title="FTM", title2="Miss")
-        st.plotly_chart(fig, use_container_width=True)
-
+        st.plotly_chart(fig, use_container_width=True, config=config)
+        fig1 = viz.create_bar(away_stats[10], away_stats[11], home=False, title="DREB", title2="OREB")
+        st.plotly_chart(fig1, use_container_width=True,config=config)
+        fig1 = viz.create_bar(away_stats[12], home_stats[12]+away_stats[12], home=False, title="AST", title2="OPP")
+        st.plotly_chart(fig1, use_container_width=True, config=config)
+        fig1 = viz.create_bar(away_stats[13], home_stats[13]+away_stats[13], home=False, title="TOV", title2="OPP")
+        st.plotly_chart(fig1, use_container_width=True, config=config)
+        fig1 = viz.create_bar(away_stats[14], home_stats[14]+away_stats[14], home=False, title="STL", title2="OPP")
+        st.plotly_chart(fig1, use_container_width=True, config=config)
+        fig1 = viz.create_bar(away_stats[15], home_stats[15]+away_stats[15], home=False, title="BLK", title2="OPP")
+        st.plotly_chart(fig1, use_container_width=True, config=config)
+        fig1 = viz.create_bar(away_stats[16], home_stats[16]+away_stats[16], home=False, title="PF", title2="OPP")
+        st.plotly_chart(fig1, use_container_width=True, config=config)
     with c3:
         st.markdown(f"<h2 style='text-align: left;'>{home_stats[2]}</h2>", unsafe_allow_html=True)
         st.markdown(f"<h2 style='text-align: center;'>{home_stats[-1]}</h2>", unsafe_allow_html=True)
         fig1 = viz.create_bar(home_stats[3], home_stats[4], home=True, title="FGM", title2="Miss")
-        st.plotly_chart(fig1, use_container_width=True)
+        st.plotly_chart(fig1, use_container_width=True,config=config)
         fig1 = viz.create_bar(home_stats[5], home_stats[6], home=True, title="TPM", title2="Miss")
-        st.plotly_chart(fig1, use_container_width=True)
+        st.plotly_chart(fig1, use_container_width=True,config=config)
         fig1 = viz.create_bar(home_stats[7], home_stats[8], home=True, title="FTM", title2="Miss")
-        st.plotly_chart(fig1, use_container_width=True)
-        fig1 = viz.create_bar(home_stats[10], home_stats[9], home=True, title="DREB", title2="OREB")
-        st.plotly_chart(fig1, use_container_width=True)
-        fig1 = viz.create_bar(home_stats[9], home_stats[10], home=True, title="OREB", title2="")
-        st.plotly_chart(fig1, use_container_width=True)
+        st.plotly_chart(fig1, use_container_width=True,config=config)
+        fig1 = viz.create_bar(home_stats[10], home_stats[11], home=True, title="DREB", title2="OREB")
+        st.plotly_chart(fig1, use_container_width=True,config=config)
+        fig1 = viz.create_bar(home_stats[12], home_stats[12]+away_stats[12], home=True, title="AST", title2="OPP")
+        st.plotly_chart(fig1, use_container_width=True, config=config)
+        fig1 = viz.create_bar(home_stats[13], home_stats[13]+away_stats[13], home=True, title="TOV", title2="OPP")
+        st.plotly_chart(fig1, use_container_width=True, config=config)
+        fig1 = viz.create_bar(home_stats[14], home_stats[14]+away_stats[14], home=True, title="STL", title2="OPP")
+        st.plotly_chart(fig1, use_container_width=True, config=config)
+        fig1 = viz.create_bar(home_stats[15], home_stats[15]+away_stats[15], home=True, title="BLK", title2="OPP")
+        st.plotly_chart(fig1, use_container_width=True, config=config)
+        fig1 = viz.create_bar(home_stats[16], home_stats[16]+away_stats[16], home=True, title="PF", title2="OPP")
+        st.plotly_chart(fig1, use_container_width=True, config=config)
     with c4:
-        pass
+        st.markdown(f"<h1 style='text-align: center;'> </h1>", unsafe_allow_html=True)
+        st.markdown(f"<h1 style='text-align: center;'> </h1>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center;'> </h3>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'> </p>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center;'> </h3>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'> </p>", unsafe_allow_html=True)
+        
+        st.markdown(f"<h3 style='text-align: center;'>{home_stats[3]}/{home_stats[4]} ({h_fgp}%)</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'> </p>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center;'>{home_stats[5]}/{home_stats[6]} ({h_ftp}%)</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'> </p>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center;'>{home_stats[7]}/{home_stats[8]} ({h_tpp}%)</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'> </p>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center;'>{home_stats[10]+home_stats[9]} REB</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'> </p>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center;'>{home_stats[12]} AST</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'> </p>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center;'>{home_stats[13]} TOV</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'> </p>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center;'>{home_stats[14]} STL</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'> </p>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center;'>{home_stats[15]} BLK</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p style='text-align: center;'> </p>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='text-align: center;'>{home_stats[16]} PF</h3>", unsafe_allow_html=True)
     with r_space:
-        st.empty()
+        pass

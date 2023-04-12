@@ -86,10 +86,12 @@ Overall, using Power BI/web apps to create dynamic dashboards enhances the value
 ## Conclusion
 NBA visualizer serves as a testament to the effectiveness of a well-designed data analysis pipeline, from data collection to visualization, and the benefits of utilizing modern tools to create reusable and dynamic solutions. As a data analyst or scientist, this project showcases the ability to tackle complex data challenges and create effective data-driven solutions.
 
+OBS! Phoenix Suns is not included, this will be fixed soon.
+
 ## Contacts
-- **Web app** - 
+- **Web app** - https://nba-visualizer.streamlit.app/
 - **Documentation (in progress)** - 
-- **Bug reports:** - 
+- **Bug reports:** - https://github.com/AlexandruNitulescu/nba_visualizer_py/issues
 
 - [LinkedIn](https://www.linkedin.com/in/alexandru-nitulescu-035778153/)
 - [GitHub](https://github.com/AlexandruNitulescu)

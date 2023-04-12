@@ -1,5 +1,5 @@
 ![banner](https://github.com/AlexandruNitulescu/nba_visualizer_py/blob/main/img/logo.png?raw=true)
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://in-malmoe.streamlit.app/)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://nba-visualizer.streamlit.app/)
 # NBA Visualizer
 by Alexandru Nitulescu
 ## Abstract

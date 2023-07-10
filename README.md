@@ -1,8 +1,7 @@
 ![banner](https://github.com/AlexandruNitulescu/nba_visualizer_py/blob/main/img/logo.png?raw=true)
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://nba-visualizer.streamlit.app/)
 # NBA Visualizer
-by Alexandru Nitulescu
-**Preview**: https://www.youtube.com/watch?v=IAECwYiBxu4
+by Alexandru Nitulescu     |      **Preview**: https://www.youtube.com/watch?v=IAECwYiBxu4
 ## Abstract
 NBA Visualizer is an example of the skills and techniques applied by a data analyst for data-driven decision making. The project follows the general principles of data analysis, starting with asking relevant questions to guide the exploration of data, and then focusing on preparing and processing the data. The project uses scraped data from NBA teams and their results during the 2022-23 seasons to demonstrate these principles.
 
